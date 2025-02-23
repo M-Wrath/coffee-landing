@@ -1,17 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
 
 export default function Hero() {
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-
-  useEffect(() => {
-    setDimensions({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-  }, []);
-
   return (
     <section id="home" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden px-4 sm:px-6 py-20 sm:py-28">
       {/* Video Background - add object-position for mobile */}

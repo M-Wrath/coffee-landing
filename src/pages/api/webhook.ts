@@ -12,43 +12,86 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-12-18.acacia',
 });
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+interface OrderData {
+  id: string;
+  amount: number;
+  metadata: {
+    orderId: string;
+    customerEmail: string;
+  };
+  status: string;
+}
+
+async function processOrder(orderData: OrderData) {
+  // Implement your order processing logic here
+  // For example: update database, send confirmation email, etc.
+  console.log('Processing order:', orderData);
+}
+
+async function handleSuccessfulPayment(paymentData: OrderData) {
+  // Implement your payment success logic here
+  // For example: update payment status, trigger fulfillment, etc.
+  console.log('Payment successful:', paymentData);
+}
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
+    return res.status(405).end();
   }
 
-  const buf = await buffer(req);
-  const sig = req.headers['stripe-signature']!;
+  let event: Stripe.Event;
 
   try {
-    const event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
+    const rawBody = await buffer(req);
+    event = stripe.webhooks.constructEvent(
+      rawBody,
+      req.headers['stripe-signature'] as string,
+      process.env.STRIPE_WEBHOOK_SECRET!
+    );
+  } catch (err) {
+    return res.status(400).send(`Webhook Error: ${err instanceof Error ? err.message : 'Unknown error'}`);
+  }
 
+  try {
     switch (event.type) {
-      case 'checkout.session.completed':
-        const session = event.data.object;
-        // Handle successful payment
-        // Update order status in database
-        // Send confirmation email
+      case 'checkout.session.completed': {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const orderData: OrderData = {
+          id: session.id,
+          amount: session.amount_total || 0,
+          metadata: {
+            orderId: session.metadata?.orderId || session.id,
+            customerEmail: session.customer_email || '',
+          },
+          status: session.status || 'unknown',
+        };
+        await processOrder(orderData);
         break;
-      
-      case 'payment_intent.payment_failed':
-        const paymentIntent = event.data.object;
-        // Handle failed payment
-        // Update order status in database
+      }
+      case 'payment_intent.succeeded': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        const paymentData: OrderData = {
+          id: paymentIntent.id,
+          amount: paymentIntent.amount,
+          metadata: {
+            orderId: paymentIntent.metadata.orderId || paymentIntent.id,
+            customerEmail: paymentIntent.metadata.customerEmail || '',
+          },
+          status: paymentIntent.status,
+        };
+        await handleSuccessfulPayment(paymentData);
         break;
+      }
+      default:
+        console.log(`Unhandled event type ${event.type}`);
     }
 
-    res.status(200).json({ received: true });
-  } catch (err: any) { // Type the error and handle it properly
-    console.error('Webhook error:', err);
-    res.status(400).json({ 
-      message: 'Webhook Error',
-      error: err instanceof Error ? err.message : 'Unknown error'
-    });
+    res.json({ received: true });
+  } catch (error) {
+    console.error('Error processing webhook:', error);
+    res.status(500).json({ error: 'Webhook handler failed' });
   }
 }

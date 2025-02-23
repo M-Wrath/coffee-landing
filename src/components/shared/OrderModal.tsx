@@ -48,7 +48,11 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     }
   };
 
-  const handleCheckout = async (customerData: any) => {
+  const handleCheckout = async (customerData: {
+    name: string;
+    email: string;
+    phone: string;
+  }) => {
     try {
       setIsProcessing(true);
       
@@ -66,12 +70,12 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
       
       // Redirect to Stripe Checkout
       const stripe = await stripePromise;
-      const { error } = await stripe!.redirectToCheckout({ sessionId });
+      const { error: stripeError } = await stripe!.redirectToCheckout({ sessionId });
       
-      if (error) {
-        toast.error(error.message || 'Payment failed');
+      if (stripeError) {
+        toast.error(stripeError.message || 'Payment failed');
       }
-    } catch (error: unknown) {
+    } catch (error) {
       toast.error('Something went wrong');
     } finally {
       setIsProcessing(false);

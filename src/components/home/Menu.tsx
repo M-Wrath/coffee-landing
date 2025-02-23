@@ -156,6 +156,11 @@ export default function Menu() {
     toast.success(`Added ${item.name} to cart`);
   };
 
+  // Add hover effect handler
+  const handleHover = (id: string | null) => {
+    setHoveredId(id);
+  };
+
   return (
     <section id="menu" className="relative py-20 bg-gradient-to-b from-background via-coffee-dark/5 to-background">
       {/* Background Elements */}
@@ -298,6 +303,8 @@ export default function Menu() {
                 className="group relative bg-white rounded-xl sm:rounded-2xl overflow-hidden
                   border border-coffee-light/10 shadow-md hover:shadow-xl
                   transition-all duration-500"
+                onMouseEnter={() => handleHover(item.id)}
+                onMouseLeave={() => handleHover(null)}
               >
                 {/* Image Container - Adjusted height */}
                 <div className="relative h-48 sm:h-52 lg:h-56 overflow-hidden">

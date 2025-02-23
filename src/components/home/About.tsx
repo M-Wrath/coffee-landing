@@ -143,7 +143,7 @@ export default function About() {
 
               <div className="space-y-4 sm:space-y-6 text-gray-600">
                 <p className="text-base sm:text-lg leading-relaxed">
-                  Born in 2024, Mocha & Co emerged from a vision to revolutionize the coffee experience. 
+                  Born in 2024, Mocha &amp; Co emerged from a vision to revolutionize the coffee experience. 
                   What started as a passion project has blossomed into a beloved community hub, where 
                   innovation meets tradition.
                 </p>
