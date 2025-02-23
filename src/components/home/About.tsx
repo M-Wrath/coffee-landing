@@ -148,7 +148,7 @@ export default function About() {
                   innovation meets tradition.
                 </p>
                 <p className="text-base sm:text-lg leading-relaxed">
-                  Our commitment goes beyond serving exceptional coffee. We're creating a space where 
+                  Our commitment goes beyond serving exceptional coffee. We&apos;re creating a space where 
                   connections flourish, ideas spark, and every visit becomes a memorable moment. Our 
                   expert baristas craft each drink with precision and care, ensuring every sip tells 
                   our story of dedication to quality.
