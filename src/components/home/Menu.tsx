@@ -146,7 +146,6 @@ export default function Menu() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [hoveredId, setHoveredId] = useState<string | null>(null); // Change to string
   const [selectedItem, setSelectedItem] = useState<MenuItem | undefined>(); // Change to undefined
-  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false); // New state
 
   const filteredItems = menuItems.filter(item => 
     activeCategory === 'All' || item.category === activeCategory
@@ -154,7 +153,6 @@ export default function Menu() {
 
   const handleAddToCart = (item: MenuItem) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
-    setIsOrderModalOpen(true); // Keep the cart open
     toast.success(`Added ${item.name} to cart`);
   };
 

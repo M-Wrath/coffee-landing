@@ -103,7 +103,6 @@ const categories = ['All', 'Interior', 'Coffee', 'People', 'Events'];
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
-  const [hoveredImage, setHoveredImage] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const filteredImages = galleryImages.filter(

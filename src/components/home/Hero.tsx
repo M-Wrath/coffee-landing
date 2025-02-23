@@ -1,7 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 
 export default function Hero() {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -12,11 +11,6 @@ export default function Hero() {
       height: window.innerHeight
     });
   }, []);
-
-  const getRandomPosition = () => ({
-    x: Math.random() * (dimensions.width || 1000),
-    y: Math.random() * (dimensions.height || 800)
-  });
 
   return (
     <section id="home" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden px-4 sm:px-6 py-20 sm:py-28">

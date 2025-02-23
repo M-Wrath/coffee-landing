@@ -224,7 +224,7 @@ export default function Footer() {
               © {currentYear} Mocha & Co. All rights reserved.
             </p>
             <div className="flex gap-6">
-              {["Privacy Policy", "Terms of Service"].map((text, index) => (
+              {["Privacy Policy", "Terms of Service"].map((text) => (
                 <motion.div
                   key={text}
                   whileHover={{ y: -2 }}

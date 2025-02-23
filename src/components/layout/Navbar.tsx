@@ -74,11 +74,6 @@ export default function Navbar() {
     }
   };
 
-  const itemVariants = {
-    closed: { x: 50, opacity: 0 },
-    open: { x: 0, opacity: 1 }
-  };
-
   return (
     <>
       {/* Backdrop */}

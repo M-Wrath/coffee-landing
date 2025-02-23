@@ -188,7 +188,7 @@ export default function Testimonials() {
                   </div>
 
                   <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                    "{testimonial.content}"
+                    &ldquo;{testimonial.content}&rdquo;
                   </p>
 
                   <motion.div

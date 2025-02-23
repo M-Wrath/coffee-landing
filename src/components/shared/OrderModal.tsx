@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/context/CartContext';
 import { useForm } from 'react-hook-form';
@@ -71,7 +71,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
       if (error) {
         toast.error(error.message || 'Payment failed');
       }
-    } catch (err) {
+    } catch (error: unknown) {
       toast.error('Something went wrong');
     } finally {
       setIsProcessing(false);

@@ -5,6 +5,14 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-12-18.acacia', // Updated API version
 });
 
+interface LineItem {
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  image?: string;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -19,7 +27,7 @@ export default async function handler(
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      line_items: items.map((item: any) => ({
+      line_items: items.map((item: LineItem) => ({
         price_data: {
           currency: 'usd',
           product_data: {

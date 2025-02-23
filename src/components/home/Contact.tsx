@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { EnvelopeIcon, ChatBubbleLeftIcon, PhoneIcon, MapPinIcon } from '@heroicons/react/24/outline';
+import { EnvelopeIcon, PhoneIcon, MapPinIcon } from '@heroicons/react/24/outline';
 
 interface FormData {
   name: string;
@@ -105,8 +105,8 @@ export default function Contact() {
               whileInView={{ opacity: 1 }}
               className="text-gray-600 max-w-2xl mx-auto"
             >
-              Have questions or feedback? We'd love to hear from you. 
-              Send us a message and we'll respond as soon as possible.
+              Have questions or feedback? We&apos;d love to hear from you. 
+              Send us a message and we&apos;ll respond as soon as possible.
             </motion.p>
           </div>
 
