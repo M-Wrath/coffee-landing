@@ -75,7 +75,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
       if (stripeError) {
         toast.error(stripeError.message || 'Payment failed');
       }
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong');
     } finally {
       setIsProcessing(false);

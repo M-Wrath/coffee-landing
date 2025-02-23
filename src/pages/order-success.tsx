@@ -38,7 +38,7 @@ export default function OrderSuccess() {
         </motion.div>
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Order Confirmed!</h1>
         <p className="text-gray-600 mb-6">
-          Thank you for your order. We'll start preparing your items right away.
+          Thank you for your order. We&apos;ll start preparing your items right away.
         </p>
         <motion.div
           initial={{ opacity: 0 }}
